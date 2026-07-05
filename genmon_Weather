@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# API URL with only the required fields
+api_url="https://api.open-meteo.com/v1/forecast?latitude=41.0207&longitude=28.585&current=temperature_2m,is_day,precipitation,rain,cloud_cover&forecast_days=1"
+
+json_data=$(curl -s "$api_url")
+
+# Extract only the necessary variables
+temperature=$(echo "$json_data" | jq .current.temperature_2m)
+precipitation=$(echo "$json_data" | jq .current.precipitation)
+cloud_cover=$(echo "$json_data" | jq .current.cloud_cover)
+rain=$(echo "$json_data" | jq .current.rain)
+isDay=$(echo "$json_data" | jq .current.is_day)
+
+# Determine the emoji based on your original logic
+if (( $(echo "$cloud_cover > 80" | bc -l) )); then
+  weather_emoji="☁️"  
+elif (( $(echo "$cloud_cover > 30" | bc -l) )); then
+  weather_emoji="⛅"  
+elif (( $(echo "$precipitation > 0.1 && $precipitation < 1" | bc -l) )); then
+  weather_emoji="🌦️" 
+elif (( $(echo "$rain > 0" | bc -l) )); then
+  weather_emoji="🌧️"  
+else
+  if [[ "$isDay" == "0" ]]; then
+      weather_emoji="🌙"
+  else
+      weather_emoji="☀️"
+  fi
+fi
+
+# Output only the emoji and temperature for the Genmon panel
+echo "<txt>$weather_emoji ${temperature}°C</txt>"
