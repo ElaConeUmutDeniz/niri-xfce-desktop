@@ -1,7 +1,8 @@
 yay -S ttf-nerd-fonts-symbols for fetch nerd fonts if your font does not have nerd fonts, like me
-Oh my zsh theme jonathan
+Oh my zsh theme jonathan. zsh syntax highlighting plugin installed on zsh
 Terminal kitty
 icon themes oomox rose pine
 i provided gtk theme, rose pine dark
 pink artix logo for launcher provided
 you need xfce4 genmon plugin for showing weather and xfce4-docklike-plugin for modern dock that you can both show apps and show currently opened apps
+that pipe like window is made with pipes-rs
